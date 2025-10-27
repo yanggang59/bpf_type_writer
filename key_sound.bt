@@ -1,0 +1,13 @@
+#!/usr/bin/env bpftrace
+
+#include <uapi/linux/input-event-codes.h>
+
+kprobe:kbd_event
+/arg1 == EV_KEY && arg3 == 1/
+{
+    if (arg2 == KEY_ENTER) {
+        printf("KEY_ENTER\n");
+    } else {
+        printf("KEY_OTHER\n");
+    }
+}
